@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Handlers;
+namespace App\Application\Handlers;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Commands\CreateUserCommand;
+use App\Application\Commands\CreateUserCommand;
 use App\Events\UserCreated;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;

@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Api\V1;
 
+use App\Application\Buses\QueryBusInterface;
+use App\Application\Queries\GetUserByIdQuery;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -41,10 +43,11 @@ class ImpersonationController extends Controller
      *      )
      * )
      */
-    public function impersonate(Request $request, $id)
+    public function impersonate(Request $request, $id, QueryBusInterface $queryBus)
     {
         $realUser = auth()->user(); // quem está logado
-        $impersonatedUser = User::findOrFail($id); // quem será impersonado
+        $impersonatedUser = $queryBus->ask(new GetUserByIdQuery($id)); // quem será impersonado
+
 
         // Verifica se o usuário tem permissão para impersonar
         if (!$realUser || !$realUser->hasRole('admin')) {

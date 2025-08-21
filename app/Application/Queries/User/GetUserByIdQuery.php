@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Queries;
+namespace App\Application\Queries;
 
 class GetUserByIdQuery
 {

@@ -1,9 +1,9 @@
 <?php 
 
-namespace App\Handlers;
+namespace App\Application\Handlers;
 
 use App\Models\User;
-use App\Queries\GetUserByIdQuery;
+use App\Application\Queries\GetUserByIdQuery;
 use Illuminate\Support\Facades\Cache;
 
 class HandleGetUserById
