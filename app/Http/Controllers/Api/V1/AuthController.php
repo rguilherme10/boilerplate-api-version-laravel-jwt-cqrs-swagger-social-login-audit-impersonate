@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Validator;
 
 /**
  * @OA\Info(
- *      title="API V1 de Autenticação",
+ *      title="API V1",
  *      version="1.0",
- *      description="API para autenticação de usuários e integração com redes sociais."
+ *      description="API em Laravel com Swagger, Versionamento, JWT-Auth, CQRS, Impersonate, Auditoria, ActivityLogs, Social Login, Chat Gemini AI"
  * )
  * 
  * @OA\SecurityScheme(
