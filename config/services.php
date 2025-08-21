@@ -38,24 +38,36 @@ return [
         'client_secret' => env('AZURE_CLIENT_SECRET'),
         'redirect' => env('AZURE_REDIRECT_URI'),
         'tenant_id' => env('AZURE_TENANT_ID'),
+        'guzzle' => [
+            'verify' => false, // ⚠️ apenas para ambiente local
+        ],
     ],
     
-    'linkedin' => [
+    'linkedin-openid' => [
         'client_id' => env('LINKEDIN_CLIENT_ID'),
         'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
         'redirect' => env('LINKEDIN_REDIRECT'),
+        'guzzle' => [
+            'verify' => false, // ⚠️ apenas para ambiente local
+        ],
     ],
 
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT'),
+        'guzzle' => [
+            'verify' => false, // ⚠️ apenas para ambiente local
+        ],
     ],
 
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
         'redirect' => env('FACEBOOK_REDIRECT'),
+        'guzzle' => [
+            'verify' => false, // ⚠️ apenas para ambiente local
+        ],
     ],
 
     'gemini' => [

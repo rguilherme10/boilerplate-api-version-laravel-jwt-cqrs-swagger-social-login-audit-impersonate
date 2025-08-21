@@ -1,10 +1,13 @@
 <?php
 namespace Modules\SocialLogin\App\Http\Controllers\Api\V1;
 
-use App\User;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Modules\SocialLogin\App\Application\Commands\User\UserGetUserBySocialLoginCommand;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 
@@ -33,7 +36,7 @@ class SocialController extends Controller
      */
     public function redirectLinkedin()
     {
-        return Socialite::driver('linkedin')->stateless()->redirect();
+        return Socialite::driver('linkedin-openid')->stateless()->redirect();
     }
 
     /**
@@ -57,10 +60,12 @@ class SocialController extends Controller
      *      )
      * )
      */
-    public function handleLinkedin()
-    {
-        $socialUser = Socialite::driver('linkedin')->stateless()->user();
-        return $this->handleSocialCallback($socialUser, 'linkedin');
+    public function handleLinkedin(Request $request)
+    {    
+        
+        //dd($request->all());
+        $socialUser = Socialite::driver('linkedin-openid')->stateless()->user();
+        return $this->handleSocialCallback($socialUser, 'linkedin-openid');
     }
 
     /**
@@ -153,33 +158,9 @@ class SocialController extends Controller
         return $this->handleSocialCallback($socialUser, 'facebook');
     }
 
-    protected function handleSocialCallback($socialUser, $provider)
+    protected function handleSocialCallback(\Laravel\Socialite\Contracts\User $socialUser, $provider)
     {
-        $user = User::firstOrCreate(
-            ['email' => $socialUser->getEmail()],
-            [
-                'name' => $socialUser->getName(),
-                "{$provider}_id" => $socialUser->getId(),
-                'oauth_type' => $provider,
-                'oauth_token' => $socialUser->token,
-                'password' => bcrypt(Str::random(16)),
-                "{$provider}_avatar" => $socialUser->avatar??"",
-            ]
-        );
-
-        switch($provider){
-            case 'linkedin':
-                $user->linkedin_firstname = $socialUser->first_name??'';
-                $user->linkedin_lastname = $socialUser->last_name??'';
-            case 'facebook':
-                $user->facebook_name = $socialUser->name??'';
-                $user->facebook_email = $socialUser->email??'';
-                $user->facebook_nick = $socialUser->nickname??'';
-            case 'google':
-                $user->google_firstname = $socialUser->user["given_name"]??'';
-                $user->google_lastname = $socialUser->user["family_name"]??'';
-        }
-        $user->save();
+        $user = Bus::dispatchSync(new UserGetUserBySocialLoginCommand($provider, $socialUser));
 
         $token = JWTAuth::fromUser($user);
         return response()->json([

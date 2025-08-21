@@ -30,7 +30,7 @@ class HandleCreateUser
             'command' => 'CreateUserCommand',
             'data' => json_encode($command)
         ])
-        ->log('Usuário criado via comando');
+        ->log('Usuário criado via HandleCreateUser');
 
         return $user;
     }

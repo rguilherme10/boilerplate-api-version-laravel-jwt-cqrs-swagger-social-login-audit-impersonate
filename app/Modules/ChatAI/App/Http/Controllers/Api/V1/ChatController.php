@@ -29,7 +29,7 @@ class ChatController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/api/v1/chat/test",
+     *      path="chat-ai/v1/test",
      *      operationId="test",
      *      tags={"Chat"},
      *      summary="Envia mensagens para AI",
@@ -73,7 +73,7 @@ class ChatController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/api/v1/chat",
+     *      path="chat-ai/v1",
      *      operationId="send",
      *      tags={"Chat"},
      *      summary="Envia mensagens para AI",
