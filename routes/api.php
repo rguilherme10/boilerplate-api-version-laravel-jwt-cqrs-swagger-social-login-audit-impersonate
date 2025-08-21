@@ -25,6 +25,8 @@ Route::prefix('v1')->group(function () {
         });
         Route::post('/logout', [App\Http\Controllers\Api\V1\AuthController::class, 'logout']);
         Route::post('/refresh', [App\Http\Controllers\Api\V1\AuthController::class, 'refresh']);
+
+        Route::post('/chat', [App\Http\Controllers\Api\V1\ChatController::class, 'send']);
     });
 
     Route::post('/login', [App\Http\Controllers\Api\V1\AuthController::class, 'login']);
@@ -41,5 +43,5 @@ Route::prefix('v1')->group(function () {
     Route::get('/auth/azure', [App\Http\Controllers\Api\V1\AzureController::class, 'redirectAzure']);
     Route::get('/auth/azure/callback', [App\Http\Controllers\Api\V1\AzureController::class, 'handleAzure']);
 
-    Route::post('/chat', [App\Http\Controllers\Api\V1\ChatController::class, 'send']);
+    Route::post('/chat', [App\Http\Controllers\Api\V1\ChatController::class, 'test']);
 });

@@ -16,7 +16,7 @@ class GeminiService
 
     public function sendMessage(string $message)
     {
-        $response = Http::withToken($this->apiKey)
+        $response = Http::withToken($this->apiKey, 'X-goog-api-key')
             ->post($this->baseUrl, [
                 'contents' => [
                     ['role' => 'user', 'parts' => [['text' => $message]]]
@@ -28,7 +28,7 @@ class GeminiService
 
     public function sendWithHistory(array $history)
     {
-        $response = Http::withToken($this->apiKey)
+        $response = Http::withToken($this->apiKey, 'X-goog-api-key')
             ->post($this->baseUrl, [
                 'contents' => $history
             ]);
