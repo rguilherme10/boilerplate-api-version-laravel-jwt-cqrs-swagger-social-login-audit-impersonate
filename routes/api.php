@@ -2,9 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\AuthController as V1AuthController;
-use App\Http\Controllers\Api\V1\SocialController as V1SocialController;
-use App\Http\Controllers\Api\V1\AzureController as V1AzureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,21 +23,23 @@ Route::prefix('v1')->group(function () {
         Route::get('/me', function () {
             return auth('api')->user();
         });
-        Route::post('/logout', [V1AuthController::class, 'logout']);
-        Route::post('/refresh', [V1AuthController::class, 'refresh']);
+        Route::post('/logout', [App\Http\Controllers\Api\V1\AuthController::class, 'logout']);
+        Route::post('/refresh', [App\Http\Controllers\Api\V1\AuthController::class, 'refresh']);
     });
 
-    Route::post('/login', [V1AuthController::class, 'login']);
+    Route::post('/login', [App\Http\Controllers\Api\V1\AuthController::class, 'login']);
 
-    Route::get('/auth/linkedin', [V1SocialController::class, 'redirectLinkedin']);
-    Route::get('/auth/linkedin/callback', [V1SocialController::class, 'handleLinkedin']);
+    Route::get('/auth/linkedin', [App\Http\Controllers\Api\V1\SocialController::class, 'redirectLinkedin']);
+    Route::get('/auth/linkedin/callback', [App\Http\Controllers\Api\V1\SocialController::class, 'handleLinkedin']);
 
-    Route::get('/auth/google', [V1SocialController::class, 'redirectGoogle']);
-    Route::get('/auth/google/callback', [V1SocialController::class, 'handleGoogle']);
+    Route::get('/auth/google', [App\Http\Controllers\Api\V1\SocialController::class, 'redirectGoogle']);
+    Route::get('/auth/google/callback', [App\Http\Controllers\Api\V1\SocialController::class, 'handleGoogle']);
 
-    Route::get('/auth/facebook', [V1SocialController::class, 'redirectFacebook']);
-    Route::get('/auth/facebook/callback', [V1SocialController::class, 'handleFacebook']);
+    Route::get('/auth/facebook', [App\Http\Controllers\Api\V1\SocialController::class, 'redirectFacebook']);
+    Route::get('/auth/facebook/callback', [App\Http\Controllers\Api\V1\SocialController::class, 'handleFacebook']);
 
-    Route::get('/auth/azure', [V1AzureController::class, 'redirectAzure']);
-    Route::get('/auth/azure/callback', [V1AzureController::class, 'handleAzure']);
+    Route::get('/auth/azure', [App\Http\Controllers\Api\V1\AzureController::class, 'redirectAzure']);
+    Route::get('/auth/azure/callback', [App\Http\Controllers\Api\V1\AzureController::class, 'handleAzure']);
+
+    Route::post('/chat', [App\Http\Controllers\Api\V1\ChatController::class, 'send']);
 });
