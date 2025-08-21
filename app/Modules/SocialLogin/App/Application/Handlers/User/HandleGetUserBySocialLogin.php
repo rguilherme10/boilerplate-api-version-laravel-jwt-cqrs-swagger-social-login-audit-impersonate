@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Application\Handlers\User;
+namespace Modules\SocialLogin\App\Application\Handlers\User;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;

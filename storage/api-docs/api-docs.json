@@ -326,6 +326,315 @@
                     }
                 ]
             }
+        },
+        "chat-ai/v1/test": {
+            "post": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Envia mensagens para AI",
+                "operationId": "test",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "message"
+                                ],
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Me conte uma piada"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resposta da AI",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "reply": {
+                                            "type": "string",
+                                            "format": "text",
+                                            "example": "Por que o tomate foi ao banco?\\n\\nPorque ele queria tirar um extrato!\\n"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "chat-ai/v1": {
+            "post": {
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Envia mensagens para AI",
+                "operationId": "send",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "message"
+                                ],
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Como posso realizar meu cadastro?"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resposta da AI",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "reply": {
+                                            "type": "string",
+                                            "format": "text",
+                                            "example": "Acesse o link 'x', preencha seus dados ..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/social-login/v1/auth/azure": {
+            "get": {
+                "tags": [
+                    "Azure"
+                ],
+                "summary": "Redireciona para a autenticação do Azure",
+                "operationId": "redirectAzure",
+                "responses": {
+                    "302": {
+                        "description": "Redireciona para a página de autenticação do Azure"
+                    }
+                }
+            }
+        },
+        "/social-login/v1/auth/azure/callback": {
+            "get": {
+                "tags": [
+                    "Azure"
+                ],
+                "summary": "Callback para autenticação do Azure",
+                "operationId": "handleAzure",
+                "responses": {
+                    "200": {
+                        "description": "Autenticação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Falha na autenticação"
+                    }
+                }
+            }
+        },
+        "/social-login/v1/auth/facebook": {
+            "get": {
+                "tags": [
+                    "Facebook"
+                ],
+                "summary": "Redireciona para a autenticação do Facebook",
+                "operationId": "redirectFacebook",
+                "responses": {
+                    "302": {
+                        "description": "Redireciona para a página de autenticação do Facebook"
+                    }
+                }
+            }
+        },
+        "/social-login/v1/auth/facebook/callback": {
+            "get": {
+                "tags": [
+                    "Facebook"
+                ],
+                "summary": "Callback para autenticação do Facebook",
+                "operationId": "handleFacebook",
+                "responses": {
+                    "200": {
+                        "description": "Autenticação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Falha na autenticação"
+                    }
+                }
+            }
+        },
+        "/social-login/v1/auth/google": {
+            "get": {
+                "tags": [
+                    "Google"
+                ],
+                "summary": "Redireciona para a autenticação do Google",
+                "operationId": "redirectGoogle",
+                "responses": {
+                    "302": {
+                        "description": "Redireciona para a página de autenticação do Google"
+                    }
+                }
+            }
+        },
+        "/social-login/v1/auth/google/callback": {
+            "get": {
+                "tags": [
+                    "Google"
+                ],
+                "summary": "Callback para autenticação do Google",
+                "operationId": "handleGoogle",
+                "responses": {
+                    "200": {
+                        "description": "Autenticação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Falha na autenticação"
+                    }
+                }
+            }
+        },
+        "/social-login/v1/auth/linkedin": {
+            "get": {
+                "tags": [
+                    "LinkedIn"
+                ],
+                "summary": "Redireciona para a autenticação do LinkedIn",
+                "operationId": "redirectLinkedIn",
+                "responses": {
+                    "302": {
+                        "description": "Redireciona para a página de autenticação do LinkedIn"
+                    }
+                }
+            }
+        },
+        "/social-login/v1/auth/linkedin/callback": {
+            "get": {
+                "tags": [
+                    "LinkedIn"
+                ],
+                "summary": "Callback para autenticação do LinkedIn",
+                "operationId": "handleLinkedIn",
+                "responses": {
+                    "200": {
+                        "description": "Autenticação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Falha na autenticação"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -351,6 +660,26 @@
         {
             "name": "Usuário",
             "description": "Endpoints relacionadas ao usuário autenticado"
+        },
+        {
+            "name": "Chat",
+            "description": "Endpoints de envio de mensagens para plataforma"
+        },
+        {
+            "name": "Azure",
+            "description": "Endpoints de autenticação com Azure"
+        },
+        {
+            "name": "Facebook",
+            "description": "Endpoints de autenticação com Facebook"
+        },
+        {
+            "name": "Google",
+            "description": "Endpoints de autenticação com Google"
+        },
+        {
+            "name": "LinkedIn",
+            "description": "Endpoints de autenticação com LinkedIn"
         }
     ]
 }

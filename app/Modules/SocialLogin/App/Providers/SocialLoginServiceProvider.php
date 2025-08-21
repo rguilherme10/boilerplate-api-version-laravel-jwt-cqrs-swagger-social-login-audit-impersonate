@@ -2,7 +2,10 @@
 
 namespace Modules\SocialLogin\App\Providers;
 
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
+use Modules\SocialLogin\App\Application\Commands\User\UserGetUserBySocialLoginCommand;
+use Modules\SocialLogin\App\Application\Handlers\User\HandleGetUserBySocialLogin;
 
 class SocialLoginServiceProvider extends ServiceProvider
 {
@@ -20,6 +23,10 @@ class SocialLoginServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/migrations'));
+        
+        Bus::map([
+            UserGetUserBySocialLoginCommand::class => HandleGetUserBySocialLogin::class,
+        ]);
     }
 
     /**

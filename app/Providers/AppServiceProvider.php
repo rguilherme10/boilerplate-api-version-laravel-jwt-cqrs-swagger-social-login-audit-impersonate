@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Application\Commands\User\CreateUserCommand;
 use App\Application\Handlers\User\HandleCreateUser;
+use App\Application\Handlers\User\HandleGetUserById;
+use App\Application\Queries\User\GetUserByIdQuery;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Health\Checks\Checks\CacheCheck;
@@ -32,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         
         Bus::map([
             CreateUserCommand::class => HandleCreateUser::class,
+            GetUserByIdQuery::class => HandleGetUserById::class,
         ]);
 
     }

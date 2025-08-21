@@ -5,7 +5,7 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'API V1',
+                'title' => 'API',
             ],
             'routes' => [
                 'api' => 'api/documentation',
@@ -15,6 +15,7 @@ return [
                 'docs_yaml' => 'api-docs.yaml',
                 'annotations' => [
                     base_path('app/Http/Controllers/Api/V1'),
+                    base_path('app/Modules'),
                 ],
             ],
         ],
