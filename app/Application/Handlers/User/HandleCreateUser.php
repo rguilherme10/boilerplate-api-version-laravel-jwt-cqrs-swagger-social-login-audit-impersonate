@@ -1,39 +1,20 @@
 <?php
 
-namespace App\Application\Handlers;
+namespace App\Application\Handlers\User;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use App\Application\Commands\CreateUserCommand;
-use App\Events\UserCreated;
+use App\Application\Commands\User\CreateUserCommand;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 
-class HandleCreateUser implements ShouldQueue
+class HandleCreateUser
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-
-    protected CreateUserCommand $command;
-
-    public function __construct(CreateUserCommand $command)
-    {
-        $this->command = $command;
-    }
-
-    /**
-     * Execute the job.
-     */
-    public function handle(): void
+    public function handle(CreateUserCommand $command): User
     {
         $user = User::create([
-            'name'     => $this->command->name,
-            'email'    => $this->command->email,
-            'password' => Hash::make($this->command->password),
+            'name'     => $command->name,
+            'email'    => $command->email,
+            'password' => Hash::make($command->password),
         ]);
 
         // Auditoria com impersonação
@@ -47,8 +28,10 @@ class HandleCreateUser implements ShouldQueue
             'impersonated_as' => $impersonatedUser?->id,
             'impersonated_name' => $impersonatedUser?->name,
             'command' => 'CreateUserCommand',
-            'data' => json_encode($this->command)
+            'data' => json_encode($command)
         ])
         ->log('Usuário criado via comando');
+
+        return $user;
     }
 }

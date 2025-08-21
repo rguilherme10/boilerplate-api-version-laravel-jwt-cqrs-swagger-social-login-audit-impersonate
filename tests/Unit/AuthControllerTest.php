@@ -1,6 +1,10 @@
 <?php
+
+use App\Application\Buses\CommandBus;
+use App\Application\Commands\User\CreateUserCommand;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Bus;
 
 class AuthControllerTest extends TestCase
 {
@@ -8,13 +12,10 @@ class AuthControllerTest extends TestCase
 
     public function test_login_com_credenciais_validas()
     {
-        $user = \App\Models\User::factory()->create([
-            'email' => 'ribamar@example.com',
-            'password' => bcrypt('senha123')
-        ]);
+        $user = Bus::dispatchSync(new CreateUserCommand('test', 'ribamar@example.com', 'senha123'));
 
         $response = $this->postJson('/api/v1/login', [
-            'email' => 'ribamar@example.com',
+            'email' => $user->email,
             'password' => 'senha123'
         ]);
 

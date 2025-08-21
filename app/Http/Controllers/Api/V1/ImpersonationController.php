@@ -3,9 +3,11 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Application\Buses\QueryBusInterface;
 use App\Application\Queries\GetUserByIdQuery;
+use App\Application\Queries\User\GetUserByIdQuery as UserGetUserByIdQuery;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Bus;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
@@ -43,10 +45,10 @@ class ImpersonationController extends Controller
      *      )
      * )
      */
-    public function impersonate(Request $request, $id, QueryBusInterface $queryBus)
+    public function impersonate(Request $request, $id)
     {
         $realUser = auth()->user(); // quem está logado
-        $impersonatedUser = $queryBus->ask(new GetUserByIdQuery($id)); // quem será impersonado
+        $impersonatedUser = Bus::dispatchSync(new UserGetUserByIdQuery($id)); // quem será impersonado
 
 
         // Verifica se o usuário tem permissão para impersonar

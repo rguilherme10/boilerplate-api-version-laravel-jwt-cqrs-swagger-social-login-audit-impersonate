@@ -1,10 +1,10 @@
 <?php
 namespace App\Application\Buses;
 
-use App\Application\Buses\QueryBusInterface;
+use App\Application\Buses\QueryBusInterfacea;
 use Illuminate\Contracts\Bus\Dispatcher;
 
-class QueryBus implements QueryBusInterface {
+class QueryBusa implements QueryBusInterfacea {
     public function __construct(private Dispatcher $dispatcher) {}
 
     public function ask(object $query): mixed {

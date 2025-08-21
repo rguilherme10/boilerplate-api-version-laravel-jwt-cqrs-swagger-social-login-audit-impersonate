@@ -1,5 +1,5 @@
 <?php 
-namespace App\Application\Commands;
+namespace App\Application\Commands\User;
 
 class CreateUserCommand
 {

@@ -1,6 +1,6 @@
 <?php
 namespace App\Application\Buses;
 
-interface QueryBusInterface {
+interface QueryBusInterfacea {
     public function ask(object $query): mixed;
 }

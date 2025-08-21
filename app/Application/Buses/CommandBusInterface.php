@@ -1,6 +1,6 @@
 <?php
 namespace App\Application\Buses;
 
-interface CommandBusInterface {
+interface CommandBusInterfacea {
     public function send(object $command): mixed;
 }
