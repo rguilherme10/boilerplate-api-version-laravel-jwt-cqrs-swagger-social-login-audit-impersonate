@@ -1,6 +1,6 @@
-# Emprega Indústria Backend API
+# Backend API
 
-This is the backend API for the Emprega Indústria application, built with Laravel.
+This is the backend API for the application, built with Laravel.
 
 ## Features
 
@@ -23,8 +23,8 @@ The API documentation is available via Swagger UI.
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/emprega_industria_backend.git
-   cd emprega_industria_backend
+   git clone https://github.com/rguilherme10/boilerplate-api-version-laravel-jwt-cqrs-swagger-social-login-audit-impersonate.git
+   cd boilerplate-api-version-laravel-jwt-cqrs-swagger-social-login-audit-impersonate
    ```
 
 2. **Install Composer dependencies:**
