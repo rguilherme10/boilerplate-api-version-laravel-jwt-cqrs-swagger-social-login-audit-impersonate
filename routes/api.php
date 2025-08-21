@@ -43,5 +43,5 @@ Route::prefix('v1')->group(function () {
     Route::get('/auth/azure', [App\Http\Controllers\Api\V1\AzureController::class, 'redirectAzure']);
     Route::get('/auth/azure/callback', [App\Http\Controllers\Api\V1\AzureController::class, 'handleAzure']);
 
-    Route::post('/chat', [App\Http\Controllers\Api\V1\ChatController::class, 'test']);
+    Route::post('/chat/test', [App\Http\Controllers\Api\V1\ChatController::class, 'test']);
 });
