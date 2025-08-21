@@ -1,0 +1,41 @@
+<?php
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class AuthControllerTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_login_com_credenciais_validas()
+    {
+        $user = \App\Models\User::factory()->create([
+            'email' => 'ribamar@example.com',
+            'password' => bcrypt('senha123')
+        ]);
+
+        $response = $this->postJson('/api/v1/login', [
+            'email' => 'ribamar@example.com',
+            'password' => 'senha123'
+        ]);
+
+        $response->assertStatus(200)
+                 ->assertJsonStructure([
+                     'access_token',
+                     'token_type',
+                     'expires_in'
+                 ]);
+    }
+
+    public function test_login_com_credenciais_invalidas()
+    {
+        $response = $this->postJson('/api/v1/login', [
+            'email' => 'naoexiste@example.com',
+            'password' => 'errada'
+        ]);
+
+        $response->assertStatus(401)
+                 ->assertJson([
+                     'error' => 'Credenciais inválidas'
+                 ]);
+    }
+}

@@ -1,0 +1,384 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API V1 de Autenticação",
+        "description": "API para autenticação de usuários e integração com redes sociais.",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Autentica um usuário e retorna um token JWT",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "usuario@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "senha123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Autenticação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/api/v1/refresh": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Atualiza um token JWT",
+                "operationId": "refresh",
+                "responses": {
+                    "200": {
+                        "description": "Token atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/logout": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Invalida um token JWT",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Logout realizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logout realizado com sucesso"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/auth/azure": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Redireciona para a autenticação do Azure",
+                "operationId": "redirectAzure",
+                "responses": {
+                    "302": {
+                        "description": "Redireciona para a página de autenticação do Azure"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/azure/callback": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Callback para autenticação do Azure",
+                "operationId": "handleAzure",
+                "responses": {
+                    "200": {
+                        "description": "Autenticação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Falha na autenticação"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/linkedin": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Redireciona para a autenticação do LinkedIn",
+                "operationId": "redirectLinkedin",
+                "responses": {
+                    "302": {
+                        "description": "Redireciona para a página de autenticação do LinkedIn"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/linkedin/callback": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Callback para autenticação do LinkedIn",
+                "operationId": "handleLinkedin",
+                "responses": {
+                    "200": {
+                        "description": "Autenticação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Falha na autenticação"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/google": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Redireciona para a autenticação do Google",
+                "operationId": "redirectGoogle",
+                "responses": {
+                    "302": {
+                        "description": "Redireciona para a página de autenticação do Google"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/google/callback": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Callback para autenticação do Google",
+                "operationId": "handleGoogle",
+                "responses": {
+                    "200": {
+                        "description": "Autenticação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Falha na autenticação"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/facebook": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Redireciona para a autenticação do Facebook",
+                "operationId": "redirectFacebook",
+                "responses": {
+                    "302": {
+                        "description": "Redireciona para a página de autenticação do Facebook"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/facebook/callback": {
+            "get": {
+                "tags": [
+                    "Social"
+                ],
+                "summary": "Callback para autenticação do Facebook",
+                "operationId": "handleFacebook",
+                "responses": {
+                    "200": {
+                        "description": "Autenticação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Falha na autenticação"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Autenticação",
+            "description": "Endpoints de autenticação de usuários"
+        },
+        {
+            "name": "Social",
+            "description": "Endpoints de autenticação com redes sociais"
+        }
+    ]
+}
