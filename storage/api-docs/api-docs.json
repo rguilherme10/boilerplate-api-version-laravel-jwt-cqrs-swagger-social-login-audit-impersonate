@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API V1 de Autenticação",
-        "description": "API para autenticação de usuários e integração com redes sociais.",
+        "title": "API V1",
+        "description": "API em Laravel com Swagger, Versionamento, JWT-Auth, CQRS, Impersonate, Auditoria, ActivityLogs, Social Login, Chat Gemini AI",
         "version": "1.0"
     },
     "paths": {

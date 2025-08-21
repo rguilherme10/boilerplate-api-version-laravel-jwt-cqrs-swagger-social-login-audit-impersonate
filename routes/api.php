@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ImpersonationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 // Rotas da API v1
 Route::prefix('v1')->group(function () {
-    Route::middleware('auth:api')->get('/user', function (Request $request) {
-        return $request->user();
-    });
 
     Route::middleware('jwt.auth')->group(function () {
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
         Route::get('/me', function () {
             return auth('api')->user();
         });
@@ -27,6 +28,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/refresh', [App\Http\Controllers\Api\V1\AuthController::class, 'refresh']);
 
         Route::post('/chat', [App\Http\Controllers\Api\V1\ChatController::class, 'send']);
+
+        Route::post('/impersonate/{id}', [ImpersonationController::class, 'impersonate']);
     });
 
     Route::post('/login', [App\Http\Controllers\Api\V1\AuthController::class, 'login']);
