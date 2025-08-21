@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\HealthController;
 use App\Http\Controllers\Api\V1\ImpersonationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,24 +28,12 @@ Route::prefix('v1')->group(function () {
         Route::post('/logout', [App\Http\Controllers\Api\V1\AuthController::class, 'logout']);
         Route::post('/refresh', [App\Http\Controllers\Api\V1\AuthController::class, 'refresh']);
 
-        Route::post('/chat', [App\Http\Controllers\Api\V1\ChatController::class, 'send']);
-
         Route::post('/impersonate/{id}', [ImpersonationController::class, 'impersonate']);
     });
 
     Route::post('/login', [App\Http\Controllers\Api\V1\AuthController::class, 'login']);
 
-    Route::get('/auth/linkedin', [App\Http\Controllers\Api\V1\SocialController::class, 'redirectLinkedin']);
-    Route::get('/auth/linkedin/callback', [App\Http\Controllers\Api\V1\SocialController::class, 'handleLinkedin']);
-
-    Route::get('/auth/google', [App\Http\Controllers\Api\V1\SocialController::class, 'redirectGoogle']);
-    Route::get('/auth/google/callback', [App\Http\Controllers\Api\V1\SocialController::class, 'handleGoogle']);
-
-    Route::get('/auth/facebook', [App\Http\Controllers\Api\V1\SocialController::class, 'redirectFacebook']);
-    Route::get('/auth/facebook/callback', [App\Http\Controllers\Api\V1\SocialController::class, 'handleFacebook']);
-
-    Route::get('/auth/azure', [App\Http\Controllers\Api\V1\AzureController::class, 'redirectAzure']);
-    Route::get('/auth/azure/callback', [App\Http\Controllers\Api\V1\AzureController::class, 'handleAzure']);
-
-    Route::post('/chat/test', [App\Http\Controllers\Api\V1\ChatController::class, 'test']);
+    Route::get('health', HealthController::class)
+    ->middleware('api')
+    ->name('health');
 });

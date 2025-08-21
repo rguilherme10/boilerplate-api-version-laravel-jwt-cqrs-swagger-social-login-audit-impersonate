@@ -159,6 +159,8 @@ return [
         /*
          * Package Service Providers...
          */
+        Spatie\LaravelIgnition\IgnitionServiceProvider::class,
+
 
         /*
          * Application Service Providers...

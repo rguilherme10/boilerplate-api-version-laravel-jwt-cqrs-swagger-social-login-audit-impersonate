@@ -1,0 +1,11 @@
+{
+    "name": "ChatAI",
+    "alias": "chatai",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ChatAI\\App\\Providers\\ChatAIServiceProvider"
+    ],
+    "files": []
+}

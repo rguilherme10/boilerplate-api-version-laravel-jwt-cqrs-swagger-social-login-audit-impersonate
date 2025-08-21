@@ -1,0 +1,11 @@
+{
+    "name": "SocialLogin",
+    "alias": "sociallogin",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\SocialLogin\\App\\Providers\\SocialLoginServiceProvider"
+    ],
+    "files": []
+}

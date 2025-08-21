@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/chatai",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\ChatAI\\": "",
+            "Modules\\ChatAI\\App\\": "app/",
+            "Modules\\ChatAI\\Database\\Factories\\": "database/factories/",
+            "Modules\\ChatAI\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\ChatAI\\Tests\\": "tests/"
+        }
+    }
+}
