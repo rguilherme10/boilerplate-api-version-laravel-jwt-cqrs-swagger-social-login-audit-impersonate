@@ -57,4 +57,9 @@ return [
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
         'redirect' => env('FACEBOOK_REDIRECT'),
     ],
+
+    'gemini' => [
+        'url' => env('GEMINI_URL','https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent'),
+        'key' => env('GEMINI_KEY'),
+    ]
 ];

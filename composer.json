@@ -17,6 +17,7 @@
         "socialiteproviders/microsoft-azure": "^5.2",
         "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-permission": "^6.21",
+        "textalk/websocket": "^1.5",
         "tymon/jwt-auth": "^2.2"
     },
     "require-dev": {
