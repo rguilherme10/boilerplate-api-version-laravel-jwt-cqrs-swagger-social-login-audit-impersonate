@@ -52,6 +52,8 @@ The API documentation is available via Swagger UI.
    ```
 
 6. **Configure your database in the `.env` file.**
+    DB_CONNECTION=sqlite
+    DB_DATABASE={PATH}\\db.sqlite
 
 7. **Run database migrations:**
 
