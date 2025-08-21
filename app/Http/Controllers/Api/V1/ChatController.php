@@ -43,7 +43,10 @@ class ChatController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="Resposta da AI"
+     *          description="Resposta da AI",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="reply", type="string", format="text", example="Por que o tomate foi ao banco?\n\nPorque ele queria tirar um extrato!\n")
+     *          )
      *      )
      * )
      */
@@ -68,6 +71,30 @@ class ChatController extends Controller
 
         return response()->json(['reply' => $response]);
     }
+
+    /**
+     * @OA\Post(
+     *      path="/api/v1/chat",
+     *      operationId="send",
+     *      tags={"Chat"},
+     *      summary="Envia mensagens para AI",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              required={"message"},
+     *              @OA\Property(property="message", type="string", format="text", example="Como posso realizar meu cadastro?")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Resposta da AI",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="reply", type="string", format="text", example="Acesse o link 'x', preencha seus dados ...")
+     *          )
+     *      )
+     * )
+     */
     public function send(Request $request)
     {
         $user = auth('api')->user();

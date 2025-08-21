@@ -6,8 +6,41 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+/**
+ * 
+ * @OA\Tag(
+ *      name="Autenticação",
+ *      description="Endpoints de autenticação de usuários"
+ * )
+ * 
+ */
 class ImpersonationController extends Controller
 {
+    
+    /**
+     * @OA\Post(     
+     *      path="/api/v1/impersonate/{id}",
+     *      operationId="impersonate",
+     *      tags={"Autenticação"},
+     *      summary="Assume papel de outro usuário",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(
+     *          response=200,
+     *          description="Token de personificação atualizado com sucesso",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="access_token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."),
+     *              @OA\Property(property="token_type", type="string", example="bearer"),
+     *              @OA\Property(property="expires_in", type="integer", example="3600"),
+     *              @OA\Property(property="acting_as", type="object", example="{'id':2, 'name':'Fulano', 'email':'fulano@example.com'}"),
+     *              @OA\Property(property="real_user", type="object", example="{'id':1, 'name':'Admin', 'email':'admin@example.com'}")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Não autorizado"
+     *      )
+     * )
+     */
     public function impersonate(Request $request, $id)
     {
         $realUser = auth()->user(); // quem está logado
