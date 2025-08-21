@@ -9,38 +9,38 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * @OA\Tag(
- *      name="Azure",
- *      description="Endpoints de autenticação com Azure"
+ *      name="LinkedIn",
+ *      description="Endpoints de autenticação com LinkedIn"
  * )
  * 
  */
-class AzureController extends Controller
+class LinkedInController extends Controller
 {
     
-    private $provider = 'microsoft';
+    private $provider = 'linkedin-openid';
     /**
      * @OA\Get(
-     *      path="/social-login/v1/auth/azure",
-     *      operationId="redirectAzure",
-     *      tags={"Azure"},
-     *      summary="Redireciona para a autenticação do Azure",
+     *      path="/social-login/v1/auth/linkedin",
+     *      operationId="redirectLinkedIn",
+     *      tags={"LinkedIn"},
+     *      summary="Redireciona para a autenticação do LinkedIn",
      *      @OA\Response(
      *          response=302,
-     *          description="Redireciona para a página de autenticação do Azure"
+     *          description="Redireciona para a página de autenticação do LinkedIn"
      *      )
      * )
      */
-    public function redirectAzure()
+    public function redirectLinkedIn()
     {
         return Socialite::driver($this->provider)->stateless()->redirect();
     }
 
     /**
      * @OA\Get(     
-     *      path="/social-login/v1/auth/azure/callback",
-     *      operationId="handleAzure",
-     *      tags={"Azure"},
-     *      summary="Callback para autenticação do Azure",
+     *      path="/social-login/v1/auth/linkedin/callback",
+     *      operationId="handleLinkedIn",
+     *      tags={"LinkedIn"},
+     *      summary="Callback para autenticação do LinkedIn",
      *      @OA\Response(
      *          response=200,
      *          description="Autenticação bem-sucedida",
@@ -56,12 +56,12 @@ class AzureController extends Controller
      *      )
      * )
      */
-    public function handleAzure()
+    public function handleLinkedIn()
     {
         
-        $azureUser = Socialite::driver($this->provider)->stateless()->user();
+        $linkedinUser = Socialite::driver($this->provider)->stateless()->user();
 
-        $user = Bus::dispatchSync(new UserGetUserBySocialLoginCommand($this->provider, $azureUser));
+        $user = Bus::dispatchSync(new UserGetUserBySocialLoginCommand($this->provider, $linkedinUser));
 
         $token = JWTAuth::fromUser($user);
         

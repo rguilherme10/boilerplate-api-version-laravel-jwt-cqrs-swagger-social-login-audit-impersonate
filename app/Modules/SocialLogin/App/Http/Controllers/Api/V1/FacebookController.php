@@ -9,38 +9,38 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * @OA\Tag(
- *      name="Azure",
- *      description="Endpoints de autenticação com Azure"
+ *      name="Facebook",
+ *      description="Endpoints de autenticação com Facebook"
  * )
  * 
  */
-class AzureController extends Controller
+class FacebookController extends Controller
 {
     
-    private $provider = 'microsoft';
+    private $provider = 'facebook';
     /**
      * @OA\Get(
-     *      path="/social-login/v1/auth/azure",
-     *      operationId="redirectAzure",
-     *      tags={"Azure"},
-     *      summary="Redireciona para a autenticação do Azure",
+     *      path="/social-login/v1/auth/facebook",
+     *      operationId="redirectFacebook",
+     *      tags={"Facebook"},
+     *      summary="Redireciona para a autenticação do Facebook",
      *      @OA\Response(
      *          response=302,
-     *          description="Redireciona para a página de autenticação do Azure"
+     *          description="Redireciona para a página de autenticação do Facebook"
      *      )
      * )
      */
-    public function redirectAzure()
+    public function redirectFacebook()
     {
         return Socialite::driver($this->provider)->stateless()->redirect();
     }
 
     /**
      * @OA\Get(     
-     *      path="/social-login/v1/auth/azure/callback",
-     *      operationId="handleAzure",
-     *      tags={"Azure"},
-     *      summary="Callback para autenticação do Azure",
+     *      path="/social-login/v1/auth/facebook/callback",
+     *      operationId="handleFacebook",
+     *      tags={"Facebook"},
+     *      summary="Callback para autenticação do Facebook",
      *      @OA\Response(
      *          response=200,
      *          description="Autenticação bem-sucedida",
@@ -56,12 +56,12 @@ class AzureController extends Controller
      *      )
      * )
      */
-    public function handleAzure()
+    public function handleFacebook()
     {
         
-        $azureUser = Socialite::driver($this->provider)->stateless()->user();
+        $facebookUser = Socialite::driver($this->provider)->stateless()->user();
 
-        $user = Bus::dispatchSync(new UserGetUserBySocialLoginCommand($this->provider, $azureUser));
+        $user = Bus::dispatchSync(new UserGetUserBySocialLoginCommand($this->provider, $facebookUser));
 
         $token = JWTAuth::fromUser($user);
         

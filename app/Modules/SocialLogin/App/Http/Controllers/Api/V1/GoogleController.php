@@ -9,38 +9,38 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * @OA\Tag(
- *      name="Azure",
- *      description="Endpoints de autenticação com Azure"
+ *      name="Google",
+ *      description="Endpoints de autenticação com Google"
  * )
  * 
  */
-class AzureController extends Controller
+class GoogleController extends Controller
 {
     
-    private $provider = 'microsoft';
+    private $provider = 'google';
     /**
      * @OA\Get(
-     *      path="/social-login/v1/auth/azure",
-     *      operationId="redirectAzure",
-     *      tags={"Azure"},
-     *      summary="Redireciona para a autenticação do Azure",
+     *      path="/social-login/v1/auth/google",
+     *      operationId="redirectGoogle",
+     *      tags={"Google"},
+     *      summary="Redireciona para a autenticação do Google",
      *      @OA\Response(
      *          response=302,
-     *          description="Redireciona para a página de autenticação do Azure"
+     *          description="Redireciona para a página de autenticação do Google"
      *      )
      * )
      */
-    public function redirectAzure()
+    public function redirectGoogle()
     {
         return Socialite::driver($this->provider)->stateless()->redirect();
     }
 
     /**
      * @OA\Get(     
-     *      path="/social-login/v1/auth/azure/callback",
-     *      operationId="handleAzure",
-     *      tags={"Azure"},
-     *      summary="Callback para autenticação do Azure",
+     *      path="/social-login/v1/auth/google/callback",
+     *      operationId="handleGoogle",
+     *      tags={"Google"},
+     *      summary="Callback para autenticação do Google",
      *      @OA\Response(
      *          response=200,
      *          description="Autenticação bem-sucedida",
@@ -56,12 +56,12 @@ class AzureController extends Controller
      *      )
      * )
      */
-    public function handleAzure()
+    public function handleGoogle()
     {
         
-        $azureUser = Socialite::driver($this->provider)->stateless()->user();
+        $googleUser = Socialite::driver($this->provider)->stateless()->user();
 
-        $user = Bus::dispatchSync(new UserGetUserBySocialLoginCommand($this->provider, $azureUser));
+        $user = Bus::dispatchSync(new UserGetUserBySocialLoginCommand($this->provider, $googleUser));
 
         $token = JWTAuth::fromUser($user);
         

@@ -56,6 +56,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'frontend_social_callback' => env('FRONTEND_SOCIAL_LOGIN_CALLBACK_URL', 'https://seu-front.com/social-login/callback'),
 
     'asset_url' => env('ASSET_URL'),
 
