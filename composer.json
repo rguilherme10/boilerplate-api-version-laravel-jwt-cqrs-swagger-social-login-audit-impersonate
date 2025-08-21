@@ -6,15 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
-        "darkaonline/l5-swagger": "^8.6",
+        "darkaonline/l5-swagger": "^9.0",
         "doctrine/dbal": "^3.10",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^12.0",
-        "laravel/sanctum": "^3.3",
+        "laravel/sanctum": "^4.2",
         "laravel/socialite": "^5.23",
         "laravel/tinker": "^2.8",
         "nwidart/laravel-modules": "^10.0",
-        "owen-it/laravel-auditing": "^13.7",
+        "owen-it/laravel-auditing": "^14.0",
         "socialiteproviders/facebook": "^4.1",
         "socialiteproviders/google": "^4.1",
         "socialiteproviders/linkedin": "^5.0",
@@ -31,8 +31,8 @@
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.1",
+        "nunomaduro/collision": "^8.8",
+        "phpunit/phpunit": "^11.5.15",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
@@ -72,6 +72,9 @@
         }
     },
     "config": {
+        "platform": {
+            "php": "8.4"
+        },
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
