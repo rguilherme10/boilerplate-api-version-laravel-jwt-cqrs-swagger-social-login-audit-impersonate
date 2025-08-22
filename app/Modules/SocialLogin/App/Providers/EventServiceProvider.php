@@ -3,6 +3,8 @@
 namespace Modules\SocialLogin\App\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Modules\SocialLogin\App\Events\LogonWithSocial;
+use Modules\SocialLogin\App\Listeners\SocialUserCleanCache;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,9 @@ class EventServiceProvider extends ServiceProvider
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             'SocialiteProviders\\Azure\\AzureExtendSocialite@handle',
         ],
+        LogonWithSocial::class  =>[
+            SocialUserCleanCache::class
+        ]
     ];
 
     /**

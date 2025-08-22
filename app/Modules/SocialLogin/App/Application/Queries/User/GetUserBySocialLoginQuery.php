@@ -1,7 +1,7 @@
 <?php 
 namespace Modules\SocialLogin\App\Application\Commands\User;
 
-class UserGetUserBySocialLoginCommand
+class GetUserBySocialLoginQuery
 {
     public string $provider;
     public \Laravel\Socialite\Contracts\User $socialLoginUser;

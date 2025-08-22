@@ -4,9 +4,7 @@ namespace App\Application\Queries\User;
 
 class GetUserByIdQuery
 {
-    public int $id;
-    public function __construct(int $id)
+    public function __construct(public int $id)
     {
-        $this->id = $id;
     }
 }

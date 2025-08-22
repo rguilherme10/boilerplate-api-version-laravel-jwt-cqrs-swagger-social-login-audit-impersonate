@@ -4,9 +4,7 @@ namespace App\Application\Queries\User;
 
 class GetUserByEmailQuery
 {
-    public string $email;
-    public function __construct(int $email)
+    public function __construct(public string $email)
     {
-        $this->email = $email;
     }
 }

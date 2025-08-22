@@ -4,7 +4,7 @@ namespace Modules\SocialLogin\App\Http\Controllers\Api\V1;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Bus;
 use Laravel\Socialite\Facades\Socialite;
-use Modules\SocialLogin\App\Application\Commands\User\UserGetUserBySocialLoginCommand;
+use Modules\SocialLogin\App\Application\Commands\User\GetUserBySocialLoginQuery;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
@@ -61,7 +61,7 @@ class GoogleController extends Controller
         
         $googleUser = Socialite::driver($this->provider)->stateless()->user();
 
-        $user = Bus::dispatchSync(new UserGetUserBySocialLoginCommand($this->provider, $googleUser));
+        $user = Bus::dispatchSync(new GetUserBySocialLoginQuery($this->provider, $googleUser));
 
         $token = JWTAuth::fromUser($user);
         

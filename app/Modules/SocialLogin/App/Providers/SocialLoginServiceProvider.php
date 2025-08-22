@@ -4,8 +4,13 @@ namespace Modules\SocialLogin\App\Providers;
 
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
-use Modules\SocialLogin\App\Application\Commands\User\UserGetUserBySocialLoginCommand;
+use Modules\SocialLogin\App\Application\Commands\SocialUser\CreateSocialUserCommand;
+use Modules\SocialLogin\App\Application\Commands\SocialUser\UpdateSocialUserCommand;
+use Modules\SocialLogin\App\Application\Commands\User\GetUserBySocialLoginQuery;
+use Modules\SocialLogin\App\Application\Handlers\SocialUser\HandleCreateOrUpdateSocialUser;
+use Modules\SocialLogin\App\Application\Handlers\User\HandleGetSocialUserByUserIdAndProvider;
 use Modules\SocialLogin\App\Application\Handlers\User\HandleGetUserBySocialLogin;
+use Modules\SocialLogin\App\Application\Queries\SocialUser\GetSocialUserByUserIdAndProviderQuery;
 
 class SocialLoginServiceProvider extends ServiceProvider
 {
@@ -25,7 +30,11 @@ class SocialLoginServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/migrations'));
         
         Bus::map([
-            UserGetUserBySocialLoginCommand::class => HandleGetUserBySocialLogin::class,
+            GetUserBySocialLoginQuery::class => HandleGetUserBySocialLogin::class,
+            GetSocialUserByUserIdAndProviderQuery::class => HandleGetSocialUserByUserIdAndProvider::class,
+            
+            CreateSocialUserCommand::class => HandleCreateOrUpdateSocialUser::class,
+            UpdateSocialUserCommand::class => HandleCreateOrUpdateSocialUser::class,
         ]);
     }
 
