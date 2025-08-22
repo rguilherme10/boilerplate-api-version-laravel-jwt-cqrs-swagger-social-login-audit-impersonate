@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,10 +16,22 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt("senha123")
+        $user = \App\Models\User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => bcrypt("admin123")
         ]);
+
+        // Criar permissão
+        Permission::create(['name' => 'user-set-role']);
+
+        // Criar papel
+        $role = Role::create(['name' => 'admin']);
+
+        // Associar permissão ao papel
+        $role->givePermissionTo('user-set-role');
+
+        // Associar papel ao usuário
+        $user->assignRole('admin');
     }
 }

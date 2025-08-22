@@ -47,7 +47,7 @@ class ImpersonationController extends Controller
      */
     public function impersonate(Request $request, $id)
     {
-        $realUser = auth()->user(); // quem está logado
+        $realUser = auth('api')->user(); // quem está logado
         $impersonatedUser = Bus::dispatchSync(new UserGetUserByIdQuery($id)); // quem será impersonado
 
 

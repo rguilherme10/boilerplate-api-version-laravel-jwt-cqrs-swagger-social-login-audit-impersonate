@@ -4,6 +4,7 @@ namespace App\Application\Handlers\User;
 
 use App\Application\Commands\User\CreateUserCommand;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -11,14 +12,19 @@ class HandleCreateUser
 {
     public function handle(CreateUserCommand $command): User
     {
-        $user = User::create([
-            'name'     => $command->name,
-            'email'    => $command->email,
-            'password' => Hash::make($command->password),
-        ]);
+        $user = User::create(
+            array_merge([
+                'name'     => $command->name,
+                'email'    => $command->email,
+                'password' => Hash::make($command->password),
+                'email_verified_at' => $command->email_verified_at
+            ], 
+        ));
+
+        event(new Registered($user));
 
         // Auditoria com impersonação
-        $realUser = auth()->user();
+        $realUser = auth('api')->user();
         $impersonatedUser = app()->has('impersonated_user') ? app('impersonated_user') : null;
 
         activity()

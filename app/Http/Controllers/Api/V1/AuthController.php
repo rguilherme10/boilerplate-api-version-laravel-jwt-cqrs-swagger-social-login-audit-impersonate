@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -76,6 +77,11 @@ class AuthController extends Controller
 
         if (!$token = auth('api')->attempt($request->only('email', 'password'))) {
             return response()->json(['error' => 'Credenciais inválidas'], 401);
+        }
+
+        if (!auth('api')->user()->hasVerifiedEmail()) {
+            auth('api')->logout();
+            return response()->json(['error' => 'Você precisa verificar seu e-mail antes de continuar.'], 401);
         }
 
         return $this->respondWithToken($token);

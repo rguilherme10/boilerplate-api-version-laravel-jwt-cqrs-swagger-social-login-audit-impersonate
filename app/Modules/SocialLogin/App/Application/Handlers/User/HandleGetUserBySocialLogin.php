@@ -4,6 +4,7 @@ namespace Modules\SocialLogin\App\Application\Handlers\User;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Modules\SocialLogin\App\Application\Commands\User\UserGetUserBySocialLoginCommand;
 use Modules\SocialLogin\App\Models\SocialUser;
@@ -15,11 +16,12 @@ class HandleGetUserBySocialLogin
         $cacheKey = "socialLoginUser:{$query->provider}:{$query->socialLoginUser->getId()}";
 
         return Cache::remember($cacheKey, now()->addDays(10), function () use ($query) {
+            
             $user = User::firstOrCreate(
                 ['email' => $query->socialLoginUser->getEmail()],
                 [
                     'name' => $query->socialLoginUser->getName(),
-                    'password' => bcrypt(Str::random(16)),
+                    'password' => Hash::make(Str::random(16)),
                 ]
             );
 

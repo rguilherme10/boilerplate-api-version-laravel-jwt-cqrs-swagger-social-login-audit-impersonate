@@ -3,21 +3,21 @@
 namespace App\Application\Handlers\User;
 
 use App\Models\User;
-use App\Application\Queries\User\GetUserByIdQuery;
+use App\Application\Queries\User\GetUserByEmailQuery;
 use Illuminate\Support\Facades\Cache;
 
-class HandleGetUserById
+class HandleGetUserByEmail
 {
-    public function handle(GetUserByIdQuery $query)
+    public function handle(GetUserByEmailQuery $query)
     {
-        $cacheKey = "user:id:{$query->id}";
+        $cacheKey = "user:email:{$query->email}";
 
         // Auditoria com impersonação
         $realUser = auth('api')->user();
         $impersonatedUser = app()->has('impersonated_user') ? app('impersonated_user') : null;
 
         $user = Cache::remember($cacheKey, now()->addMinutes(10), function () use ($query) {
-            return User::findOrFail($query->id);
+            return User::where('email', $query->email)->first();
         });
 
         activity()
@@ -26,10 +26,10 @@ class HandleGetUserById
         ->withProperties([
             'impersonated_as' => $impersonatedUser?->id,
             'impersonated_name' => $impersonatedUser?->name,
-            'query' => 'GetUserByIdQuery',
+            'query' => 'GetUserByEmailQuery',
             'data' => json_encode($query)
         ])
-        ->log('Usuário consultado via HandleGetUserById');
+        ->log('Usuário consultado via HandleGetUserByEmail');
 
         return $user;
     }

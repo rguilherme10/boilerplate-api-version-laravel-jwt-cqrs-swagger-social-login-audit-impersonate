@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 // Rotas da API v1
 Route::prefix('v1')->group(function () {
 
-    Route::middleware('auth:api')->group(function () {
+    Route::middleware(['auth:api', 'verified'])->group(function () {
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
