@@ -81,9 +81,16 @@ The API documentation is available via Swagger UI.
 
 ## Configuration
 
+### SWAGGER DOCUMENTATION
+
+```bash
+php artisan l5-swagger:generate
+```
+
 ### JWT Authentication
 
 The JWT secret key needs to be generated:
 
 ```bash
 php artisan jwt:secret
+```
