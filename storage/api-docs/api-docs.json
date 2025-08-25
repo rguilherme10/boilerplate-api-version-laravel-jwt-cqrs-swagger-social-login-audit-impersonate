@@ -327,7 +327,83 @@
                 ]
             }
         },
-        "chat-ai/v1/test": {
+        "/api/v1/register": {
+            "post": {
+                "tags": [
+                    "Usuário"
+                ],
+                "summary": "Registra um novo usuário",
+                "operationId": "register",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Novo Usuário"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "novo@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "senha123"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "senha123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário registrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": "2"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Novo Usuário"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "format": "email",
+                                            "example": "novo@example.com"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/chat-ai/v1/test": {
             "post": {
                 "tags": [
                     "Chat"
@@ -375,7 +451,7 @@
                 }
             }
         },
-        "chat-ai/v1": {
+        "/chat-ai/v1": {
             "post": {
                 "tags": [
                     "Chat"

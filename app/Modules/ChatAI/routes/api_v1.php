@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:api', 'verified'])->group(function () {
-    Route::post('/chat', [Modules\ChatAI\App\Http\Controllers\Api\V1\ChatController::class, 'send']);
+    Route::post('/', [Modules\ChatAI\App\Http\Controllers\Api\V1\ChatController::class, 'send']);
 });
 
 if(env('APP_ENV')==='local'){
-    Route::post('/chat/test', [Modules\ChatAI\App\Http\Controllers\Api\V1\ChatController::class, 'test']);
+    Route::post('/test', [Modules\ChatAI\App\Http\Controllers\Api\V1\ChatController::class, 'test']);
 }

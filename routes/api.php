@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ForgotPasswordController;
 use App\Http\Controllers\Api\V1\HealthController;
 use App\Http\Controllers\Api\V1\ImpersonationController;
+use App\Http\Controllers\Api\V1\ResetPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Rotas da API v1
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware('throttle:100,1')->group(function () {
 
     Route::middleware(['auth:api', 'verified'])->group(function () {
         Route::get('/user', function (Request $request) {
@@ -33,6 +35,9 @@ Route::prefix('v1')->group(function () {
 
     Route::post('/login', [App\Http\Controllers\Api\V1\AuthController::class, 'login']);
     Route::post('/register', [App\Http\Controllers\Api\V1\UserController::class, 'register']);
+
+    Route::post('/password/forgot', [ForgotPasswordController::class, 'forgot'])->middleware('throttle:2,1');
+    Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:2,1');
 
     Route::get('health', HealthController::class)
     ->middleware('api')

@@ -1,5 +1,5 @@
 <?php 
-namespace Modules\SocialLogin\App\Application\Commands\User;
+namespace Modules\SocialLogin\App\Application\Queries\User;
 
 class GetUserBySocialLoginQuery
 {

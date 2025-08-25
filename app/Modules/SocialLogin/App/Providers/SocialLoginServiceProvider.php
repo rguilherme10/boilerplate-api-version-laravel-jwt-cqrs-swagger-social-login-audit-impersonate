@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
 use Modules\SocialLogin\App\Application\Commands\SocialUser\CreateSocialUserCommand;
 use Modules\SocialLogin\App\Application\Commands\SocialUser\UpdateSocialUserCommand;
-use Modules\SocialLogin\App\Application\Commands\User\GetUserBySocialLoginQuery;
 use Modules\SocialLogin\App\Application\Handlers\SocialUser\HandleCreateOrUpdateSocialUser;
 use Modules\SocialLogin\App\Application\Handlers\User\HandleGetSocialUserByUserIdAndProvider;
 use Modules\SocialLogin\App\Application\Handlers\User\HandleGetUserBySocialLogin;
 use Modules\SocialLogin\App\Application\Queries\SocialUser\GetSocialUserByUserIdAndProviderQuery;
+use Modules\SocialLogin\App\Application\Queries\User\GetUserBySocialLoginQuery as UserGetUserBySocialLoginQuery;
 
 class SocialLoginServiceProvider extends ServiceProvider
 {
@@ -30,7 +30,7 @@ class SocialLoginServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/migrations'));
         
         Bus::map([
-            GetUserBySocialLoginQuery::class => HandleGetUserBySocialLogin::class,
+            UserGetUserBySocialLoginQuery::class => HandleGetUserBySocialLogin::class,
             GetSocialUserByUserIdAndProviderQuery::class => HandleGetSocialUserByUserIdAndProvider::class,
             
             CreateSocialUserCommand::class => HandleCreateOrUpdateSocialUser::class,
